@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 public class RateServiceImpl implements RateService {
 
-    private final  RateRepository rateRepository;
+    private final RateRepository rateRepository;
 
     private final UserRepository userRepository;
 
@@ -29,7 +29,13 @@ public class RateServiceImpl implements RateService {
                                   .orElseThrow(() -> new NotFoundException("не найден пользователь с id: " + userId));
 
         Film film = filmRepository.findById(filmId)
-                                  .orElseThrow(() -> new NotFoundException("не найден пользователь с id: " + userId));
+                                  .orElseThrow(() -> new NotFoundException("не найден фильм с id: " + userId));
+
+
+        Rate rateSave = rateRepository.findRateByAuthor_Id(userId);
+        if (rateSave != null)
+            throw new RuntimeException("можно только одну оценку поставить фильму");
+
 
         rate.setAuthor(user);
 

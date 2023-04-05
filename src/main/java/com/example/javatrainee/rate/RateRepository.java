@@ -8,6 +8,7 @@ public interface RateRepository extends JpaRepository<Rate, Long> {
 
     Collection<Rate> findAllByFilmIdIs(long filmId);
 
+    Rate findRateByAuthor_Id(long userId);
 }
 
 
